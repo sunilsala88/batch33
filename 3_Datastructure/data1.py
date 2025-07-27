@@ -15,3 +15,8 @@ print(a)
 print(l1) 
 i=l1.index('nifty')
 print(i)
+print(l1)
+del l1[2]
+print(l1)
+l1[1]='hdfc'
+print(l1)
