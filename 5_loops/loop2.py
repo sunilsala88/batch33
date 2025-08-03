@@ -17,3 +17,14 @@ for i in pnl:
 print(count)
 
 prices=[100, 120, 130, 140, 150]
+total=0
+for i in prices:
+    total=total+i
+avg=total/len(prices)
+print(avg)
+
+count=0
+for i in prices:
+    if i>avg:
+        count=count+1
+print(count)
