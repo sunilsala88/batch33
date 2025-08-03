@@ -34,3 +34,5 @@ new_list=[]
 for i in list3:
     new_list.append(i**2)
 print(new_list)
+
+

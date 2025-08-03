@@ -28,3 +28,14 @@ for i in prices:
     if i>avg:
         count=count+1
 print(count)
+
+#vwap
+p=[100, 105, 110]
+v=[200, 150, 300]
+sum_of_volume=0
+sum_of_pv=0
+for i in range(len(p)):
+    sum_of_volume=sum_of_volume+v[i]
+    sum_of_pv=sum_of_pv+(p[i]*v[i])
+vwap=sum_of_pv/sum_of_volume
+print(vwap)
