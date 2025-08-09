@@ -44,5 +44,20 @@ for i in range(8):
     fib.append(num3)
     num1=num2
     num2=num3
-    
+
 print(fib)
+
+n=9
+for i in range(1,11):
+    print(n,"x",i,'=',n*i)
+
+
+for i in 'hello':
+    print(i)
+
+number=34567
+s_number=str(number)
+count=0
+for i in s_number:
+    count=count+1
+print(count)
