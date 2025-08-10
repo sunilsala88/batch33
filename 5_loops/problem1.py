@@ -52,3 +52,44 @@ while True:
     year=year+1
 
 print(year)
+
+
+i=1
+n=10
+total=0
+while True:
+    if i==n:
+        break
+
+    i=i+1
+    if i%2==0:
+        total=total+i
+print(total)
+
+init_bal=50_000
+montly=200
+interest=0.06
+years=20
+
+for i in range(20*12):
+    init_bal=init_bal+montly
+
+    # init_bal=init_bal+(init_bal*(interest/12))
+    if i%12==0:
+        init_bal=init_bal+(init_bal*interest)
+print(init_bal)
+
+start=2000
+monthly_cont=150
+end_result=10_000
+interest=0.04
+current_inv=start
+months=0
+while True:
+    if current_inv>=end_result:
+        break
+    months=months+1
+    current_inv=current_inv+150
+    if months%12==0:
+        current_inv=current_inv+(current_inv*interest)
+print(months)
