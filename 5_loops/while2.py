@@ -26,3 +26,31 @@ new=""
 for i in range(len(str1)-1 ,-1,-1):
     new=new+str1[i]
 print(new)
+
+
+new=""
+i=-1
+while True:
+    if i==-(len(str1)+1):
+        break
+    new=new+str1[i]
+    i=i-1
+print(new)
+
+new=""
+i=0
+while True:
+    if i==len(str1):
+        break
+    new=str1[i]+new
+    i=i+1
+print(new)
+
+new=""
+i=len(str1)
+while True:
+    if i==0:
+        break
+    i=i-1
+    new=new+str1[i]
+print(new)
