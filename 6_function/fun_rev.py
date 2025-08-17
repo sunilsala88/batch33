@@ -62,3 +62,20 @@ print(number)
 
 #global var can be accesed inside a function
 #any var that you create inside a function is called local variable
+
+
+def modify_list(lst):
+    lst.append(4)
+
+my_list = [1, 2, 3]
+modify_list(my_list)
+print(my_list)
+
+def modify_value(x):
+    x = 10
+
+num = 5
+modify_value(num)
+print(num)
+
+
