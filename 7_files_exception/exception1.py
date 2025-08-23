@@ -34,3 +34,11 @@ try:
     print(d)
 except:
     print('file not found')
+
+try:
+    data = {"name": "John", "age": 30}
+    i=input('enter the key')
+    v=data[i]
+    print(v)
+except:
+    print('invalid key')
