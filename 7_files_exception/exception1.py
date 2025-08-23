@@ -19,3 +19,18 @@ except Exception as e:
     print('something went wrong')
 
 print('this is last line')
+
+# list1=[44,55,66,77,88]
+# try:
+#     i=int(input('enter the index number'))
+#     v=list1[i]
+#     print(v)
+# except:
+#     print('invalid index')
+
+try:
+    f1=open(r'/Users/algo trading 2025/batch33/7_files_exception/data.txt','r')
+    d=f1.read()
+    print(d)
+except:
+    print('file not found')
