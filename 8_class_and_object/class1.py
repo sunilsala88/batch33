@@ -103,6 +103,8 @@ class Circle:
 c1=Circle(10)
 print(c1.radius)
 print(c1.area())
+print(Circle.area(c1))
+
 print(c1.circumference())
 
 c2=Circle(15)
@@ -114,3 +116,5 @@ print(c1)
 print(c2)
 
 #what is self
+#any instance attribute that you crete or acess requires self inside a class
+#every method first parameter should be self
