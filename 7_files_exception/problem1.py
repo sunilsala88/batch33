@@ -22,11 +22,15 @@ def buy_stocks():
     return porfolio
 
 def save_data(port):
-
-    f1=open('data.txt','w')
+    total=0
+    f1=open('data.txt','a')
     for i,j in port.items():
         d1=i+':'+str(j)+'\n'
         f1.write(d1)
+        total=total+j
+
+    d2="total"+':'+str(total)+'\n'
+    f1.write(d2)
     
     f1.close()
 
