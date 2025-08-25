@@ -20,3 +20,7 @@ print(v)
 
 c2=Circle(40)
 print(c2.circumference())
+
+import demo.sample1 as t1
+
+print(t1.tsla)
