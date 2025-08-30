@@ -26,3 +26,9 @@ z1=np.zeros(10)
 print(z1)
 z2=np.ones(20)
 print(z2)
+
+ml1=[[1,2,3],[4,5,6],[7,8,9]]
+print(ml1)
+nmp=np.array(ml1)
+print(nmp)
+print(nmp[1,0])
