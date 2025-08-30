@@ -22,3 +22,6 @@ class Circle:
 
     def circumference(self):
         return 2*self.Pi*self.radius
+
+if __name__=="__main__":
+    print('thisis file 1')

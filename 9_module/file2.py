@@ -8,19 +8,19 @@
 
 # print(file1.get_intro())
 
-import alksdjflkjaslkdfjalksdjfklasjdflkjasdf as f1
+# import alksdjflkjaslkdfjalksdjfklasjdflkjasdf as f1
 
-print(f1.b)
-f1.get_price()
+# print(f1.b)
+# f1.get_price()
 
 
 from file1 import v,Circle
 
 print(v)
 
-c2=Circle(40)
-print(c2.circumference())
+# c2=Circle(40)
+# print(c2.circumference())
 
-import demo.sample1 as t1
+# import demo.sample1 as t1
 
-print(t1.tsla)
+# print(t1.tsla)
