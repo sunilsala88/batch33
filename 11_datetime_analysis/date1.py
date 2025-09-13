@@ -47,3 +47,33 @@ while True:
     
     i=i+1
 print(thursdays)
+
+s1='2023-09-02'
+#epoch time
+#1971
+epoch1=1757756609
+
+#convert epoch to datetime
+c1=dt.datetime.fromtimestamp(epoch1)
+print(c1)
+
+#convert datetime to epoch
+print(n1.timestamp())
+
+#convert str to datetime
+s1='2023-09-02'
+f1='%Y-%m-%d'
+sd1=dt.datetime.strptime(s1,f1)
+print(sd1)
+
+
+s1='2023-Jan-02'
+f1='%Y-%b-%d'
+sd1=dt.datetime.strptime(s1,f1)
+print(sd1)
+
+n1=dt.datetime.now()
+#'year--day"
+f='%Y--%a'
+s3=n1.strftime(f)
+print(s3)
