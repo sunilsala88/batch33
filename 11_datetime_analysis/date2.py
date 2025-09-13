@@ -23,3 +23,6 @@ print(data)
 print(data.info())
 print(data[data['time1']=='09:15:00']['close'].to_list())
 print(data.iloc[0,-1]=='09:15:00')
+
+data['wday']=data['date'].dt.weekday
+print(data)
