@@ -26,3 +26,12 @@ print(data.iloc[0,-1]=='09:15:00')
 
 data['wday']=data['date'].dt.weekday
 print(data)
+
+data1=pd.read_csv(r"/Users/algo trading 2025/batch33/10_data_analysis/Unicorn_companies.csv")
+print(data1)
+data1['Date Joined']=pd.to_datetime(data1['Date Joined'],format='%d-%m-%Y')
+data1['year1']=data1['Date Joined'].dt.year
+print(data1)
+data1=data1[data1['year1']>2021]
+print(data1)
+print(data1['Company'].to_list())
