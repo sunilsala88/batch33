@@ -13,15 +13,20 @@ class Smacross(Strategy):
     def init(self):
         self.sma1=self.I(get_sma,self.data.df.Close,self.s1)
         self.sma2=self.I(get_sma,self.data.df.Close,self.s2)
-    def next(self):
-        pass
 
+    def next(self):
+        
+        if self.sma1[-1]>self.sma2[-1] and self.sma1[-2]<self.sma2[-2]:
+            self.buy()
+        if self.sma1[-1]<self.sma2[-1] and self.sma1[-2]>self.sma2[-2]:
+            self.position.close()
 data=yf.download('TSLA',period='2y',multi_level_index=False)
 print(data)
 sma=get_sma(data['Close'],20)
 print(sma)
 
-bt=Backtest(data,Smacross,cash=1000)
+bt=Backtest(data,Smacross,cash=1000,finalize_trades=True)
 output=bt.run()
 print(output)
-bt.plot()
+# bt.plot()
+output['_trades'].to_csv('trades.csv')
