@@ -7,11 +7,14 @@ import pandas_ta as ta
 def get_sma(closing_price,length):
     return ta.sma(closing_price,length)
 
+def get_ema(closing_price,length):
+    return ta.ema(closing_price,length)
+
 class Smacross(Strategy):
     s1=20
     s2=50
     def init(self):
-        self.sma1=self.I(get_sma,self.data.df.Close,self.s1)
+        self.sma1=self.I(get_ema,self.data.df.Close,self.s1)
         self.sma2=self.I(get_sma,self.data.df.Close,self.s2)
 
     def next(self):
@@ -32,5 +35,10 @@ print(sma)
 bt=Backtest(data,Smacross,cash=1000,finalize_trades=True)
 output=bt.run()
 print(output)
-bt.plot()
+# bt.plot()
 # output['_trades'].to_csv('trades.csv')
+
+output2=bt.optimize(s1=[10,15,20,25,30],s2=[40,45,50,55,50,65],maximize='Return [%]')
+print(output2)
+print(output2['_strategy'])
+bt.plot()
