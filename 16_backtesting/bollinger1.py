@@ -20,7 +20,7 @@ def middle(closing,length):
 
 
 class Bollinger(Strategy):
-    l1=10
+    l1=30
 
     def init(self):
         self.lower=self.I(lower,self.data.df.Close,self.l1)
@@ -28,17 +28,28 @@ class Bollinger(Strategy):
         self.upper=self.I(upper,self.data.df.Close,self.l1)
     
     def next(self):
-        pass
+        if self.data.df.Close[-1]>self.upper[-1]:
+            if self.position.is_long:
+                self.position.close()
+            if not self.position:
+                self.sell()
+        
+        if self.data.df.Close[-1]<self.lower[-1]:
+            if self.position.is_short:
+                self.position.close()
+            if not self.position:
+                self.buy()
 
 
 
 
 
-data=yf.download('JPY=X',period='2y',multi_level_index=False)
+data=yf.download('^NSEI',period='6mo',interval='1h',multi_level_index=False)
 print(data)
 u=upper(data['Close'],20)
 print(u)
 
-bt=Backtest(data,Bollinger,cash=1000)
+bt=Backtest(data,Bollinger,cash=100000)
 output=bt.run()
+print(output)
 bt.plot()
