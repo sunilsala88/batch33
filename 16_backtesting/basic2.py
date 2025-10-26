@@ -27,6 +27,7 @@ class Smacross(Strategy):
             if self.position.is_long:
                 self.position.close()
             self.sell()
+
 data=yf.download('TSLA',period='2y',multi_level_index=False)
 print(data)
 sma=get_sma(data['Close'],20)
