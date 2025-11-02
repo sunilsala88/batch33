@@ -160,8 +160,8 @@ class Supertrend(Strategy):
 
 
     def next(self):
-        print(self.data.df)
-        time.sleep(1)
+        # print(self.data.df)
+        # time.sleep(1)
         
         if self.trend[-1]==1 and self.trend[-2]==-1:
             if self.position.is_short:

@@ -1,77 +1,7 @@
 
-import pandas as pd
-data=pd.read_csv('data.csv')
-data.drop(['symbol','trade_count'],axis=1,inplace=True)
-
-data.rename(columns={'timestamp':'Date','open':'Open','high':'High','low':'Low','close':'Close','volume':'Volume'},inplace=True)
-data['Date']=pd.to_datetime(data['Date'])
-print(data.info())
-data.set_index('Date',inplace=True)
-print(data)
-
-data=data.iloc[:1000]
-
-def ema(
-    close: pd.Series,
-    length: int = 10,
-    presma: bool = True,
-    offset: int = 0,
-    adjust: bool = False,
-    **kwargs
-) -> pd.Series:
-    """Exponential Moving Average
-    
-    This Moving Average is more responsive than the Simple Moving
-    Average (SMA).
-    
-    Parameters:
-        close (pd.Series): Close price series
-        length (int): The period. Default: 10
-        presma (bool): Initialize with SMA like TA Lib. Default: True
-        offset (int): Post shift. Default: 0
-        adjust (bool): Default: False
-        
-    Other Parameters:
-        fillna (value): pd.DataFrame.fillna(value)
-        
-    Returns:
-        pd.Series: EMA values
-    """
-    # Validate length
-    if length <= 0:
-        length = 10
-    
-    # Check if we have enough data
-    if len(close) < length:
-        return pd.Series([np.nan] * len(close), index=close.index, name=f"EMA_{length}")
-    
-    # Calculate EMA
-    if presma:  # TA Lib implementation - start with SMA
-        close_copy = close.copy()
-        sma_nth = close.iloc[0:length].mean()
-        close_copy.iloc[:length - 1] = np.nan
-        close_copy.iloc[length - 1] = sma_nth
-        ema_result = close_copy.ewm(span=length, adjust=adjust).mean()
-    else:
-        ema_result = close.ewm(span=length, adjust=adjust).mean()
-    
-    # Apply offset
-    if offset != 0:
-        ema_result = ema_result.shift(offset)
-    
-    # Fill NaN values if requested
-    if "fillna" in kwargs:
-        ema_result.fillna(kwargs["fillna"], inplace=True)
-    
-    # Name and Category
-    ema_result.name = f"EMA_{length}"
-    
-    return ema_result
-
 
 import yfinance as yf
 from backtesting import Backtest,Strategy
-from backtesting.lib import resample_apply
 import time
 
 import pandas as pd
@@ -210,9 +140,6 @@ def supertrend(
     return df
 
 
-def get_ema(close,length):
-    em=ema(close,length)
-    return em
 
 def get_trend(high,low,close,length,mul):
     st=supertrend(high,low,close,length,mul)
@@ -223,49 +150,38 @@ def get_super(high,low,close,length,mul):
     return st[f'SUPERT_{length}_{mul}.0']
 
 
-st = supertrend(data['High'], data['Low'], data['Close'], length=10, multiplier=3.0)
-print(st)
-
-em= ema(data['Close'],length=10)
-print(em)
-
-
-
 class Supertrend(Strategy):
-    l1=20
+    l1=10
     f1=3
-    em1=10
-
+    sl1=0.05
     def init(self):
         self.super=self.I(get_super,self.data.df.High,self.data.df.Low,self.data.df.Close,self.l1,self.f1)
         self.trend=self.I(get_trend,self.data.df.High,self.data.df.Low,self.data.df.Close,self.l1,self.f1)
-        # self.ema=self.I(get_ema,self.data.df.Close,self.em1)
-        self.ema=resample_apply('D', get_ema,self.data.Close.s,self.em1)
+
 
     def next(self):
-   
-  
+        # print(self.data.df)
+        # time.sleep(1)
         
-        if self.trend[-1]==1  and self.ema[-1]<self.data.Close[-1]:
+        if self.trend[-1]==1 and self.trend[-2]==-1:
             if self.position.is_short:
                 self.position.close()
-            if not self.position:
-                self.buy()
-        if self.trend[-1]==-1  and self.ema[-1]>self.data.Close[-1]:
+            closing_price=self.data.df.Close[-1]
+            self.buy(sl=closing_price*(1 - self.sl1))
+        if self.trend[-1]==-1 and self.trend[-2]==1:
             if self.position.is_long:
                 self.position.close()
-            if not self.position:
-                self.sell()
+            closing_price=self.data.df.Close[-1]
+            self.sell(sl=closing_price*(1 + self.sl1))
+   
 
-
+data=yf.download('NVDA',period='2y',multi_level_index=False)
+print(data)
+# Calculate Supertrend
+st = supertrend(data['High'], data['Low'], data['Close'], length=10, multiplier=3.0)
+print(st)
 
 bt=Backtest(data,Supertrend,cash=10000,finalize_trades=True)
 output=bt.run()
 print(output)
-# bt.plot()
-
-
-output2=bt.optimize(l1=range(5,50,3),em1=range(5,20,3),maximize='Return [%]')
-print(output2)
-print(output2['_strategy'])
 bt.plot()
