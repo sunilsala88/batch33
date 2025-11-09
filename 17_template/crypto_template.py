@@ -120,7 +120,7 @@ def get_historical_crypto_data(ticker,duration,time_frame_unit):
     sdata=sdata.set_index('timestamp')
     sdata['sma_20']=sma(sdata['close'],length=20)
     sdata['sma_50']=sma(sdata['close'],length=50)
-    sdata['atr']=talib.ATR(sdata['high'],sdata['low'],sdata['close'],14)
+    # sdata['atr']=talib.ATR(sdata['high'],sdata['low'],sdata['close'],14)
 
     return sdata
 
@@ -130,6 +130,7 @@ print(data)
 
 print('strategy started')
 logging.info('strategy started')
+
 
 def close_this_position(ticker_name):
     ticker_name=ticker_name.replace('/','')
@@ -269,8 +270,8 @@ def main_strategy_code():
 current_time=dt.now(tz=time_zone)
 print(current_time)
 
-start_hour,start_min=9,36
-end_hour,end_min=9,50
+start_hour,start_min=4,18
+end_hour,end_min=4,20
 
 start_time=dt.datetime(current_time.year,current_time.month,current_time.day,start_hour,start_min,tz=time_zone)
 end_time=dt.datetime(current_time.year,current_time.month,current_time.day,end_hour,end_min,tz=time_zone)
