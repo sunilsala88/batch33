@@ -672,5 +672,3 @@ print('strategy stopped')
 
 
 
-#lim 100
-#lim 100
