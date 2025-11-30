@@ -237,6 +237,9 @@ def store(data):
 def load():
     return pickle.load(open(f'data-{dt.now(time_zone).date()}.pickle', 'rb'))
 
+
+
+
 # Function to place a limit order
 def take_limit_position(ticker, action, quantity, limit_price):
     try:
@@ -363,7 +366,7 @@ def real_order(spot_price,df):
                 trade_client.close_position(put_sell_name)
 
 
-        if main_flag == 0:  # Check if the main flag is 0
+        if main_flag == 0 :  # Check if the main flag is 0
             logging.info('placing iron condor')
 
             # Buy hedge options first
@@ -650,56 +653,6 @@ def real_order(spot_price,df):
 
         # Store the real_info using pickle
         store(real_info)
-
-
-
-# def chase_order(ord_df):
-#     # Check if the order dataframe is not empty
-#     if not ord_df.empty:
-#         # Filter orders with status 6 (open orders)
-#         ord_df = ord_df[ord_df['order_type'] == 'limit']
-#         # Iterate through each order in the dataframe
-#         for i, o1 in ord_df.iterrows():
-#             # Get the symbol name from the order
-#             symbol = o1['symbol']
-#             # Get the current price of the symbol from the dataframe
-
-#             try:
-
-#                 if i.symbol==symbol:
-#                     id1=i.id
-#                     s=i.side
-#                     print(s)
-#                     #get current price of symbol
-#                     request_params = OptionLatestQuoteRequest(symbol_or_symbols=symbol)
-#                     latest_quote = option_data_client.get_option_latest_quote(request_params)
-#                     current_price=(latest_quote.get(symbol).ask_price+latest_quote.get(symbol).bid_price)//2
-#                     print(current_price)
-#                     l_price=float(i.limit_price)
-#                     print(l_price)
-#                     q=i.qty
-#                     t=i.time_in_force
-#                     if current_price > l_price:
-#                                     new_lmt_price = round(l_price + 1, 1)
-#                     else:
-#                                     new_lmt_price = round(l_price - 1, 1)
-
-#                     new_limit_order_data = LimitOrderRequest(
-#                                 symbol=symbol,
-#                                 limit_price=new_lmt_price,
-#                                 qty=q,
-#                                 side=s,
-#                                 time_in_force=t
-#                             )
-#                     print(new_limit_order_data)
-#                     updated_order=trade_client.replace_order_by_id(id1,new_limit_order_data)
-#                     print(f"Modified Order ID: {updated_order.limit_price}")
-
-
-
-#             except:
-#                 # Print an error message if there is an exception
-#                 print('error in chasing order')
 
 
 
